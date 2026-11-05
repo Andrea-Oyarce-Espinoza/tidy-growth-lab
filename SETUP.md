@@ -1,6 +1,6 @@
 # Activar Tidy Growth Lab con Vercel y Supabase
 
-La integración está preparada; todavía no se han creado servicios ni publicado la aplicación.
+La aplicación ya está publicada y conectada a GitHub, Vercel y Supabase. Consulta `INTEGRACION.md` para ver el estado verificado y el envío de correo pendiente. Los pasos siguientes sirven como referencia para otros entornos; el SQL ya está aplicado al proyecto actual.
 
 ## 1. Supabase
 
