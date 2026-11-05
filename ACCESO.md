@@ -12,7 +12,7 @@ La respuesta al solicitar el enlace no confirma si el correo tiene cuenta. Los e
 
 ## Google OAuth
 
-- Proyecto de Google Cloud: `tidy-growth-lab`.
+- Proyecto de Google Cloud: `tidy-growth-lab`. Estado verificado: **En producción**, usuarios externos.
 - Cliente web: `Tidy Growth Lab Web`.
 - Origen de JavaScript: `https://tidy-growth-lab.vercel.app`.
 - URI de retorno autorizado en Google: `https://gnenwedzjwdzvgrzhhpr.supabase.co/auth/v1/callback`.

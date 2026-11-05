@@ -21,7 +21,7 @@ Se ejecutó una prueba transaccional con dos identidades temporales que confirm�
 
 La transacción se revirtió al terminar; las identidades y el plan de prueba no quedaron guardados. Una comprobación adicional por la API pública confirmó el proveedor de correo activo, la confirmación obligatoria y respuesta HTTP 401 al acceso anónimo a planes.
 
-La compilación en Vercel finalizó correctamente y se revisaron la página pública y la pantalla de registro publicadas. El recorrido real de registro → correo → confirmación → ingreso → guardado aún necesita una prueba con una cuenta real.
+La compilación en Vercel finalizó correctamente y se revisaron la página pública y la pantalla de registro publicadas. El recorrido de registro por correo → confirmación → ingreso → guardado sigue pendiente del proveedor SMTP. El recorrido con Google se verificó con la cuenta titular: consentimiento, retorno al plan personal vacío y sesión conservada al navegar y recargar.
 
 ## Pendiente para abrir el registro a la audiencia
 
@@ -36,3 +36,5 @@ La configuración SMTP se realiza en Supabase; sus credenciales no deben agregar
 ## Recuperación y Google OAuth
 
 La interfaz incluye «Olvidé mi contraseña», una página para elegir la nueva contraseña tras un enlace de recuperación válido y el botón de Google. Google está habilitado en Supabase; el botón consulta el estado real del proveedor. El cliente OAuth se configura en el proyecto de Google Cloud `tidy-growth-lab`. Consulta `ACCESO.md` para configuración y validación.
+
+Google Cloud confirmó el estado «En producción» para usuarios externos. Se verificó en el navegador el acceso con Google y, por API, el proveedor habilitado y el callback correcto. La recuperación se comprobó sin enlace y con una sesión normal: ambas muestran únicamente la solicitud por correo; no autorizan un cambio de contraseña. Seis pruebas y la compilación local y de Vercel pasaron. La entrega del correo y el cambio con enlace real siguen pendientes de SMTP.
