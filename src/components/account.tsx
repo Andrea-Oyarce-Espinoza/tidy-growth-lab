@@ -4,6 +4,7 @@ import type { User } from "@supabase/supabase-js";
 import { getSupabase } from "@/lib/supabase/client";
 import { emptyPlan, parseBackup, type LabData } from "@/lib/data";
 import { Planner } from "./planner";
+import { GoogleSignIn } from "./google-sign-in";
 
 export function Account() {
   const [user, setUser] = useState<User | null>(null);
@@ -21,6 +22,9 @@ export function Account() {
       return;
     }
     let active = true;
+    if (new URLSearchParams(window.location.hash.slice(1)).has("error")) {
+      setMessage("No se pudo completar el acceso. Inténtalo otra vez.");
+    }
     async function load(next: User | null) {
       if (!active) return;
       if (loadedUser.current === (next?.id ?? null)) return;
@@ -129,12 +133,14 @@ export function Account() {
           : "Qué bueno tenerte de vuelta."}
       </h1>
       <p>Un espacio gratuito para tus ideas, publicaciones y métricas.</p>
+      {supabase && <GoogleSignIn />}
       {!supabase ? (
         <p role="status">
           Estamos preparando la apertura. El registro estará disponible pronto.
         </p>
       ) : (
         <form
+          method="post"
           onSubmit={async (event) => {
             event.preventDefault();
             setBusy(true);
@@ -209,6 +215,13 @@ export function Account() {
       )}
       <p role="status">{message}</p>
       {supabase && (
+        <p>
+          <a className="text-button" href="/recuperar">
+            Olvidé mi contraseña
+          </a>
+        </p>
+      )}
+      {supabase && (
         <button
           className="text-button"
           onClick={() => {
@@ -223,7 +236,8 @@ export function Account() {
       )}
       <small>
         No necesitas compartir la contraseña de tus redes sociales. Las métricas
-        se ingresan manualmente.
+        se ingresan manualmente.{" "}
+        <a href="/privacidad">Privacidad y tus datos</a>.
       </small>
     </main>
   );

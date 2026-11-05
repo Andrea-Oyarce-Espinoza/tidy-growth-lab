@@ -173,6 +173,7 @@ export default function Page() {
       <footer className="public-footer">
         <strong>tidy. growth lab</strong>
         <span>Creado por Tidy Studio · Un paso a la vez.</span>
+        <a href="/privacidad">Privacidad y tus datos</a>
       </footer>
     </div>
   );

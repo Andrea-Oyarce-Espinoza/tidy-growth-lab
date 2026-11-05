@@ -5,7 +5,7 @@
 - Vercel: proyecto `tidy-growth-lab`, equipo `andrea-oyarce-espinozas-projects`, rama de producción `main`.
 - Supabase: proyecto `tidy-growth-lab`, referencia `gnenwedzjwdzvgrzhhpr`.
 - Las variables `NEXT_PUBLIC_SUPABASE_URL` y `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` están configuradas en Vercel para producción, preview y desarrollo. `.env.local` y `.vercel/` están excluidos de Git.
-- Site URL de Supabase: `https://tidy-growth-lab.vercel.app`. Redirect permitido: `https://tidy-growth-lab.vercel.app/mi-lab`.
+- Site URL de Supabase: `https://tidy-growth-lab.vercel.app`. Redirects permitidos: `https://tidy-growth-lab.vercel.app/mi-lab` y `https://tidy-growth-lab.vercel.app/recuperar`.
 - Registro por correo habilitado, confirmación de correo requerida y acceso anónimo deshabilitado.
 
 ## Base de datos
@@ -32,3 +32,7 @@ Documentación oficial: https://supabase.com/docs/guides/auth/auth-smtp
 Después de configurar el remitente, probar con dos correos reales distintos: registro y confirmación, ingreso, crear una publicación, guardar, recargar y comprobar que cada cuenta ve solo sus datos. La confirmación de correo sigue activada. El formulario no suscribe a marketing.
 
 La configuración SMTP se realiza en Supabase; sus credenciales no deben agregarse a variables `NEXT_PUBLIC_` ni al repositorio.
+
+## Recuperación y Google OAuth
+
+La interfaz incluye «Olvidé mi contraseña», una página para elegir la nueva contraseña tras un enlace de recuperación válido y el botón de Google. Google está habilitado en Supabase; el botón consulta el estado real del proveedor. El cliente OAuth se configura en el proyecto de Google Cloud `tidy-growth-lab`. Consulta `ACCESO.md` para configuración y validación.

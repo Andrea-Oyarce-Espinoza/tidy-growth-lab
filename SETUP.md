@@ -26,7 +26,7 @@ La aplicación ya está publicada y conectada a GitHub, Vercel y Supabase. Consu
 - Abrir la misma cuenta en dos pestañas, guardar en una e intentar guardar en la otra: debe aparecer un error de conflicto; exportar un respaldo antes de recargar.
 - Probar una conexión interrumpida: el fallo de guardado debe avisar y permitir exportar. La cuenta usa guardado explícito, no automático. Evitar edición simultánea desde varios dispositivos.
 - Probar importación/exportación, fechas, estados y métricas reales. Los respaldos locales previos pueden importarse después de entrar a la cuenta; no se migran automáticamente.
-- Revisar móvil, correo de confirmación y textos de privacidad con los datos reales del responsable antes del lanzamiento. Preparar contacto de soporte y procedimiento de recuperación/eliminación de cuentas. Esta versión no incluye todavía interfaces de recuperación de contraseña ni eliminación de cuenta; pueden gestionarse desde Supabase mientras se implementan.
+- Revisar móvil, correo de confirmación y textos de privacidad con los datos reales del responsable antes del lanzamiento. Preparar contacto de soporte y procedimiento de recuperación/eliminación de cuentas. La recuperación de contraseña está en `/recuperar`; necesita un proveedor de correo operativo. La eliminación de cuentas se solicita al soporte y se gestiona desde Supabase. Consulta `ACCESO.md` para Google OAuth y pruebas de recuperación.
 
 ## Rutas y límites
 
