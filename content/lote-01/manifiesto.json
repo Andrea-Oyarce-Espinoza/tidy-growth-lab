@@ -1,0 +1,24 @@
+{
+  "project": "Tidy Growth Lab",
+  "batch": "01",
+  "posts": [
+    {
+      "plannerId": "seed-1",
+      "format": "Carrusel",
+      "files": 6,
+      "size": "1080x1350",
+      "status": "listo para revisión"
+    },
+    {
+      "plannerId": "seed-2",
+      "format": "Reel",
+      "file": "02-reel/tidy-3-senales.mp4",
+      "size": "1080x1920",
+      "seconds": 29,
+      "fps": 30,
+      "audio": false,
+      "status": "listo para revisión"
+    }
+  ],
+  "note": "No equivale a publicado. No modifica localStorage ni métricas."
+}
