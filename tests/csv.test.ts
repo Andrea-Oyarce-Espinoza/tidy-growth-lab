@@ -73,8 +73,14 @@ test("textos con apariencia de fórmula se exportan como texto y se recuperan in
     const data = initialData();
     data.posts[0].description = value;
     const csv = exportCsv(data);
-    assert.ok(csv.includes(`"'${value.replaceAll('"', '""')}"`));
+    const prefix = value.startsWith("'") ? "'" : "'\t";
+    assert.ok(csv.includes(`"${prefix}${value.replaceAll('"', '""')}"`));
     assert.equal(importCsv(csv, data).posts[0].description, value);
+    if (!value.startsWith("'")) {
+      const escaped = value.replaceAll('"', '""');
+      const savedByExcel = csv.replace(`"'\t${escaped}"`, `"\t${escaped}"`);
+      assert.equal(importCsv(savedByExcel, data).posts[0].description, value);
+    }
   }
 });
 test("rechaza planillas ambiguas o inválidas sin modificar el plan existente", () => {

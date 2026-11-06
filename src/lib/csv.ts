@@ -38,10 +38,14 @@ const unsafe = (value: string) =>
   /^[\s\u0000-\u001f]*[=+@\-＝＋＠－]/u.test(value) || /^[\t\r\n]/.test(value);
 function cell(value: string | number | null) {
   let text = value === null ? "" : String(value);
-  if (unsafe(text) || text.startsWith("'")) text = "'" + text;
+  // The tab remains protective if Excel removes the leading apostrophe on save.
+  if (unsafe(text)) text = "'\t" + text;
+  else if (text.startsWith("'")) text = "'" + text;
   return `"${text.replaceAll('"', '""')}"`;
 }
 function textCell(value: string) {
+  if (value.startsWith("'\t") && unsafe(value.slice(2))) return value.slice(2);
+  if (value.startsWith("\t") && unsafe(value.slice(1))) return value.slice(1);
   return value.startsWith("'") && (value[1] === "'" || unsafe(value.slice(1)))
     ? value.slice(1)
     : value;
