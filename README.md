@@ -24,7 +24,8 @@ Abre http://127.0.0.1:3000. Para producción local: `npm run build` y `npm start
 - `src/components/post-editor.tsx`: edición y métricas manuales.
 - `src/components/ui`: componentes shadcn/ui editables.
 - `src/lib/data.ts`: esquema versionado Zod, tipos, fechas e ideas iniciales.
-- `tests/data.test.ts`: integridad del plan, respaldos y validaciones.
+- `src/lib/csv.ts`: importación/exportación CSV y compatibilidad con respaldos anteriores.
+- `tests/data.test.ts` y `tests/csv.test.ts`: integridad del plan, intercambio con planillas y validaciones.
 
 ## Uso y datos del plan original de Tidy Studio
 
@@ -32,7 +33,7 @@ Calendario fijo de 90 días: 4 de noviembre de 2026 a 1 de febrero de 2027. Las 
 
 532 seguidores al 4 de noviembre de 2026 es el único registro inicial. Los seguidores actuales requieren cantidad y fecha manuales. Las métricas comienzan vacías; vacío significa sin registrar y cero significa cero medido. La meta de 60.000 no incluye proyecciones ni garantías.
 
-Los cambios se guardan en `localStorage`, clave `tidy-growth-lab:v1`, después de cargar los datos existentes. Son específicos del navegador, perfil y origen (incluido el puerto), sin sincronización entre dispositivos. Exportar descarga un JSON. Importar valida el documento completo y solicita confirmar el reemplazo; los archivos inválidos no modifican los datos. Máximo 10 MB y 5.000 publicaciones por respaldo.
+Los cambios se guardan en `localStorage`, clave `tidy-growth-lab:v1`, después de cargar los datos existentes. Son específicos del navegador, perfil y origen (incluido el puerto), sin sincronización entre dispositivos. «Descargar CSV» entrega una planilla UTF-8 con BOM, columnas en español y separador punto y coma. Incluye una fila Cuenta con seguidores y fechas, y una fila Publicación por idea. Se puede abrir en Excel o Google Sheets y guardar otra vez como CSV UTF-8. El importador acepta coma, punto y coma o tabulación, fechas AAAA-MM-DD o DD/MM/AAAA y valores vacíos (sin registrar) distintos de cero. Conserva los encabezados y deja ID vacío para nuevas publicaciones. La importación reemplaza el plan completo tras confirmar; si no hay fila Cuenta, conserva los seguidores del plan actual. Los archivos inválidos no modifican los datos. Se mantienen los respaldos JSON anteriores solo como importación y rescate del almacenamiento dañado. Máximo 10 MB y 5.000 publicaciones. XLSX/XLSM deben guardarse como CSV antes de importar; no se ejecutan macros.
 
 Si el almacenamiento original no se puede leer, se bloquea la edición para no sobrescribirlo y se permite exportar el original o restaurar un respaldo válido. Si falla una escritura, se muestra un aviso: exporta antes de cerrar. Evita editar simultáneamente en varias pestañas.
 
@@ -46,6 +47,6 @@ npm run typecheck
 npm run build
 ```
 
-Prueba manual recomendada: editar una idea, cambiar estado y fecha, guardar métricas (incluido cero), recargar, registrar seguidores, exportar, modificar y restaurar el respaldo. Revisa también cancelar una importación e importar un JSON inválido.
+Prueba manual recomendada: editar una idea, cambiar estado y fecha, guardar métricas (incluido cero), recargar, registrar seguidores, exportar, modificar y restaurar el respaldo. Revisa también cancelar una importación, abrir la descarga en una planilla e importar un CSV inválido.
 
 La compilación utiliza Webpack por un fallo local de Turbopack al procesar CSS en Windows.

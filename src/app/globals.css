@@ -1257,3 +1257,16 @@ h2 span {
 .privacy-page .public-button {
   margin-top: 25px;
 }
+.csv-help {
+  margin: 0 24px 18px;
+  color: #756b80;
+  font-size: 12px;
+  line-height: 1.8;
+}
+.csv-help summary {
+  cursor: pointer;
+  color: #79549b;
+}
+.csv-help p {
+  max-width: 850px;
+}

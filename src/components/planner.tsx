@@ -24,6 +24,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Dialog } from "@/components/ui/dialog";
 import { PostEditor } from "@/components/post-editor";
+import { exportCsv, importPlan } from "@/lib/csv";
 import {
   dateAt,
   emptyMetrics,
@@ -119,10 +120,8 @@ export function Planner({ account }: { account?: Account }) {
     window.addEventListener("beforeunload", warn);
     return () => window.removeEventListener("beforeunload", warn);
   }, [dirty]);
-  function download(raw: string, name: string) {
-    const url = URL.createObjectURL(
-      new Blob([raw], { type: "application/json" }),
-    );
+  function download(raw: string, name: string, type = "application/json") {
+    const url = URL.createObjectURL(new Blob([raw], { type }));
     const a = document.createElement("a");
     a.href = url;
     a.download = name;
@@ -398,13 +397,18 @@ export function Planner({ account }: { account?: Account }) {
                   variant="ghost"
                   onClick={() => {
                     try {
-                      download(
-                        blocked
-                          ? (localStorage.getItem(STORAGE_KEY) ??
-                              JSON.stringify(data))
-                          : JSON.stringify(data, null, 2),
-                        "tidy-growth-lab-backup.json",
-                      );
+                      if (blocked) {
+                        download(
+                          localStorage.getItem(STORAGE_KEY) ?? "",
+                          "tidy-growth-lab-original.json",
+                        );
+                      } else {
+                        download(
+                          exportCsv(data),
+                          "tidy-growth-lab.csv",
+                          "text/csv;charset=utf-8",
+                        );
+                      }
                     } catch {
                       setNotice("No se pudo exportar el archivo.");
                     }
@@ -412,7 +416,7 @@ export function Planner({ account }: { account?: Account }) {
                   disabled={!ready}
                 >
                   <ArrowDownToLine size={15} />
-                  Exportar
+                  {blocked ? "Descargar original" : "Descargar CSV"}
                 </Button>
                 <Button
                   variant="ghost"
@@ -420,33 +424,59 @@ export function Planner({ account }: { account?: Account }) {
                   disabled={!ready}
                 >
                   <ArrowUpFromLine size={15} />
-                  Importar
+                  Importar planilla
                 </Button>
                 <input
                   ref={importRef}
-                  aria-label="Importar respaldo JSON"
+                  aria-label="Importar planilla CSV o respaldo anterior"
                   type="file"
-                  accept=".json,application/json"
+                  accept=".csv,text/csv,.json,application/json"
                   className="hidden"
                   onChange={async (e) => {
                     const file = e.target.files?.[0];
                     e.target.value = "";
                     if (!file) return;
                     if (file.size > 10_000_000) {
-                      setNotice("El respaldo debe pesar menos de 10 MB.");
+                      setNotice("La planilla debe pesar menos de 10 MB.");
                       return;
                     }
                     try {
-                      setPending(parseBackup(await file.text()));
-                    } catch {
+                      setPending(
+                        importPlan(await file.text(), file.name, data),
+                      );
+                    } catch (error) {
                       setNotice(
-                        "Respaldo inválido: revisa su versión, fechas y métricas. Tus datos se mantienen.",
+                        `${error instanceof Error && !/\.json$/i.test(file.name) ? error.message : "No pudimos leer el respaldo anterior. Revisa sus fechas y métricas."} Tu plan se mantiene sin cambios.`,
                       );
                     }
                   }}
                 />
               </div>
             </div>
+            <details className="csv-help">
+              <summary>
+                Cómo trabajar con tu planilla en Excel o Google Sheets
+              </summary>
+              <p>
+                Descarga el CSV, ábrelo en Excel o Google Sheets y conserva los
+                encabezados. Cada fila de «Publicación» es una idea; puedes
+                agregar nuevas filas dejando el ID vacío. La fila «Cuenta»
+                guarda tus registros de seguidores. Si tu plan está vacío, la
+                descarga también sirve como plantilla.
+              </p>
+              <p>
+                Formatos: Carrusel, Reel o Imagen. Estados: idea, en producción,
+                programado o publicado. Usa fechas AAAA-MM-DD o DD/MM/AAAA y
+                métricas enteras sin separadores de miles; una celda vacía
+                significa sin registrar.
+              </p>
+              <p>
+                Guarda como CSV UTF-8 antes de importar. Si todo aparece en una
+                sola columna, importa el archivo con separador punto y coma. La
+                importación reemplaza el plan completo y te pedirá confirmación.
+                También puedes importar tus respaldos JSON anteriores.
+              </p>
+            </details>
             {notice && (
               <div role="status" className="notice">
                 {notice}
@@ -747,12 +777,21 @@ export function Planner({ account }: { account?: Account }) {
           onOpenChange={(open) => {
             if (!open) setPending(null);
           }}
-          title="Restaurar respaldo"
-          description={`Este respaldo contiene ${pending.posts.length} publicaciones. Reemplazará tu plan abierto${account ? "; usa Guardar mi plan para confirmar en tu cuenta" : " en este navegador"}.`}
+          title="Revisar importación de planilla"
+          description={`La planilla contiene ${pending.posts.length} publicaciones y los registros de seguidores que se muestran abajo. Reemplazará tu plan abierto${account ? "; después usa Guardar mi plan para guardarlo en tu cuenta" : " en este navegador"}.`}
         >
           <p className="mb-5 text-sm text-slate-600">
             Exporta primero si quieres conservar una copia de tu planificación
             actual.
+          </p>
+          <p className="mb-5 text-sm text-slate-600">
+            Seguidores iniciales: {pending.baseline.count ?? "sin registrar"} ·{" "}
+            {dateLabel(pending.baseline.date)}. Seguidores actuales:{" "}
+            {pending.currentFollowers ?? "sin registrar"}
+            {pending.currentFollowersDate
+              ? ` · ${dateLabel(pending.currentFollowersDate)}`
+              : ""}
+            .
           </p>
           <div className="flex justify-end gap-2">
             <Button variant="outline" onClick={() => setPending(null)}>
@@ -768,8 +807,8 @@ export function Planner({ account }: { account?: Account }) {
                   setPending(null);
                   setNotice(
                     account
-                      ? "Respaldo restaurado. Usa Guardar mi plan para guardarlo en tu cuenta."
-                      : "Respaldo restaurado y guardado.",
+                      ? "Planilla importada. Usa Guardar mi plan para guardarla en tu cuenta."
+                      : "Planilla importada y guardada.",
                   );
                 } catch {
                   setNotice(
@@ -779,7 +818,7 @@ export function Planner({ account }: { account?: Account }) {
                 }
               }}
             >
-              Reemplazar y restaurar
+              Reemplazar mi plan
             </Button>
           </div>
         </Dialog>
