@@ -1270,3 +1270,409 @@ h2 span {
 .csv-help p {
   max-width: 850px;
 }
+/* Seasonal artwork is drawn with CSS. Motion is controlled by native JS animations. */
+.christmas-season {
+  --holiday-height: 56px;
+  --background: #f7f8f3;
+  --primary: #245748;
+  --border: #e1e7de;
+}
+.holiday-theme {
+  position: relative;
+  z-index: 30;
+}
+.holiday-banner {
+  min-height: var(--holiday-height);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px 25px;
+  padding: 18px 22px 9px;
+  background: #204b40;
+  color: #faf5e8;
+  position: relative;
+}
+.holiday-banner-message {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+  letter-spacing: 0.1px;
+}
+.holiday-banner-message strong {
+  font-size: 10px;
+  letter-spacing: 1.6px;
+  color: #f0d89d;
+}
+.holiday-little-star,
+.tree-star {
+  background: #eccb79;
+  clip-path: polygon(
+    50% 0%,
+    61% 34%,
+    98% 36%,
+    69% 58%,
+    79% 96%,
+    50% 75%,
+    21% 96%,
+    31% 58%,
+    2% 36%,
+    39% 34%
+  );
+}
+.holiday-little-star {
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+}
+.holiday-motion {
+  color: #f8f2df;
+  background: #ffffff0b;
+  border: 1px solid #ffffff38;
+  border-radius: 20px;
+  padding: 5px 10px;
+  font: inherit;
+  font-size: 10px;
+  white-space: nowrap;
+}
+.holiday-motion:hover:not(:disabled) {
+  background: #ffffff20;
+}
+.holiday-motion:focus-visible {
+  outline-color: #f0d89d;
+}
+.holiday-motion:disabled {
+  opacity: 0.8;
+}
+.holiday-lights {
+  position: absolute;
+  inset: 0 0 auto;
+  height: 15px;
+  pointer-events: none;
+  border-top: 1px solid #a8b8a154;
+}
+.holiday-bulb {
+  position: absolute;
+  top: 2px;
+  width: 5px;
+  height: 9px;
+  background: #efcb7d;
+  border-radius: 2px 2px 5px 5px;
+  box-shadow: 0 2px 7px #efcb7d85;
+}
+.holiday-bulb:nth-child(3n) {
+  background: #d38075;
+  box-shadow: 0 2px 7px #d3807580;
+}
+.holiday-bulb:nth-child(3n + 1) {
+  background: #a9ceb1;
+  box-shadow: 0 2px 7px #a9ceb180;
+}
+.holiday-snow {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 20;
+}
+.holiday-flake {
+  position: absolute;
+  top: 0;
+  display: block;
+  opacity: 0;
+  background: #8da59b;
+  border-radius: 50%;
+}
+.holiday-flake-star {
+  border-radius: 0;
+  background: #bda267;
+  clip-path: polygon(
+    50% 0,
+    60% 40%,
+    100% 50%,
+    60% 60%,
+    50% 100%,
+    40% 60%,
+    0 50%,
+    40% 40%
+  );
+}
+.christmas-season .sidebar {
+  top: var(--holiday-height);
+  border-color: #dfe7df;
+}
+.christmas-season .brand-icon {
+  position: relative;
+  background: #e8efe4;
+  color: #315b48;
+}
+.christmas-season .brand-icon::before {
+  content: "";
+  position: absolute;
+  z-index: 2;
+  width: 25px;
+  height: 20px;
+  top: -10px;
+  right: -5px;
+  background: #b9555b;
+  clip-path: polygon(9% 100%, 48% 4%, 81% 19%, 100% 52%, 70% 43%, 69% 100%);
+  transform: rotate(13deg);
+}
+.christmas-season .brand-icon::after {
+  content: "";
+  position: absolute;
+  z-index: 3;
+  top: 5px;
+  right: 2px;
+  width: 20px;
+  height: 5px;
+  border-radius: 3px;
+  background: #fff9ee;
+  transform: rotate(13deg);
+  box-shadow: 14px -8px 0 -1px #fff9ee;
+}
+.christmas-season .brand-dot,
+.christmas-season .public-hero h1 span {
+  color: #b9555b;
+}
+.christmas-season .public-button,
+.christmas-season [class~="bg-[#282334]"] {
+  background: #245748;
+}
+.christmas-season .public-button:hover,
+.christmas-season [class~="bg-[#282334]"]:hover {
+  background: #326c58;
+}
+.christmas-season .public-pill {
+  background: #e8efe3;
+  color: #426346;
+}
+.christmas-season .sidebar-note,
+.christmas-season .creator-story {
+  background: #eaf0e4;
+}
+.christmas-season .stat.goal {
+  background: #e9f1e6;
+}
+.christmas-season .eyebrow {
+  color: #657857;
+}
+.christmas-season .public-features .feature-grid article {
+  border-color: #e2e7da;
+}
+.christmas-season .public-features .feature-grid article > span {
+  color: #a88749;
+}
+.christmas-season .lab-preview {
+  position: relative;
+  border-color: #d9e2d0;
+  box-shadow: 15px 24px 0 #e8eddf;
+}
+.christmas-season .preview-note {
+  padding-right: 65px;
+}
+.christmas-season .access-card {
+  border-color: #dfe7d6;
+  box-shadow: 0 15px 45px #24574808;
+}
+.christmas-season .public-last {
+  position: relative;
+}
+.christmas-season .public-last::before {
+  content: "";
+  display: block;
+  width: 50px;
+  height: 50px;
+  margin: 0 auto;
+  border: 9px solid #456b4b;
+  border-radius: 50%;
+  box-shadow:
+    inset 0 0 0 2px #edf2e6,
+    0 0 0 2px #edf2e6;
+  background:
+    radial-gradient(circle at 30% 30%, #c56361 0 3px, transparent 4px),
+    radial-gradient(circle at 75% 65%, #c56361 0 3px, transparent 4px);
+}
+.christmas-scene {
+  position: absolute;
+  width: 160px;
+  height: 190px;
+  right: -23px;
+  bottom: -52px;
+  pointer-events: none;
+  transform: rotate(-2deg);
+}
+.christmas-tree {
+  position: absolute;
+  inset: 0;
+}
+.tree-star {
+  position: absolute;
+  top: 1%;
+  left: 43%;
+  width: 20%;
+  height: 17%;
+  z-index: 5;
+}
+.tree-trunk {
+  position: absolute;
+  bottom: 10%;
+  left: 49%;
+  width: 9%;
+  height: 22%;
+  background: #96764b;
+  border-radius: 2px;
+}
+.tree-bough {
+  position: absolute;
+  background: #416f54;
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+  filter: drop-shadow(0 2px 0 #254f4240);
+}
+.tree-bough-bottom {
+  bottom: 21%;
+  left: 14%;
+  width: 80%;
+  height: 43%;
+  background: #285a44;
+}
+.tree-bough-middle {
+  bottom: 36%;
+  left: 23%;
+  width: 62%;
+  height: 38%;
+  background: #3a6d50;
+}
+.tree-bough-top {
+  bottom: 53%;
+  left: 32%;
+  width: 44%;
+  height: 34%;
+  background: #507b56;
+}
+.tree-ball {
+  position: absolute;
+  width: 7%;
+  height: 6%;
+  border-radius: 50%;
+  z-index: 4;
+  background: radial-gradient(circle at 30% 25%, #f2cd8b, #bf9452);
+  box-shadow: 0 2px 2px #24473330;
+}
+.ball-one {
+  top: 31%;
+  left: 50%;
+}
+.ball-two {
+  top: 49%;
+  left: 39%;
+  background: #c2736b;
+}
+.ball-three {
+  top: 56%;
+  left: 63%;
+}
+.ball-four {
+  top: 68%;
+  left: 29%;
+}
+.ball-five {
+  top: 69%;
+  left: 51%;
+  background: #c2736b;
+}
+.christmas-gift {
+  position: absolute;
+  z-index: 6;
+  bottom: 7%;
+  border-radius: 3px;
+  box-shadow: 0 3px 4px #24473312;
+}
+.christmas-gift::before {
+  content: "";
+  position: absolute;
+  left: 43%;
+  top: 0;
+  width: 15%;
+  height: 100%;
+  background: #f4dcad;
+}
+.christmas-gift::after {
+  content: "";
+  position: absolute;
+  top: 22%;
+  left: 0;
+  width: 100%;
+  height: 13%;
+  background: #f4dcad;
+}
+.gift-red {
+  width: 34%;
+  height: 25%;
+  left: 8%;
+  background: #b55b5f;
+  transform: rotate(-5deg);
+}
+.gift-gold {
+  width: 27%;
+  height: 19%;
+  left: 59%;
+  background: #d4b776;
+  transform: rotate(6deg);
+}
+.gift-gold::before,
+.gift-gold::after {
+  background: #f7ecd3;
+}
+.christmas-scene-shadow {
+  position: absolute;
+  bottom: 3%;
+  left: 5%;
+  width: 90%;
+  height: 6%;
+  background: #234c4012;
+  border-radius: 50%;
+}
+@media (max-width: 640px) {
+  .holiday-wish {
+    display: none;
+  }
+  .holiday-banner {
+    gap: 8px 14px;
+    padding-inline: 12px;
+  }
+  .holiday-banner-message strong {
+    font-size: 9px;
+    letter-spacing: 1px;
+  }
+  .holiday-motion {
+    font-size: 9px;
+  }
+  .christmas-scene {
+    width: 115px;
+    height: 140px;
+    right: -9px;
+    bottom: -42px;
+  }
+  .christmas-season .preview-note {
+    padding-right: 45px;
+  }
+  .christmas-season .public-hero {
+    padding-bottom: 85px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .holiday-snow {
+    display: none;
+  }
+}
+@media print {
+  .holiday-theme,
+  .christmas-scene {
+    display: none;
+  }
+  .christmas-season .sidebar {
+    top: 0;
+  }
+}

@@ -6,6 +6,7 @@ import {
   ChartNoAxesCombined,
   Check,
 } from "lucide-react";
+import { ChristmasScene } from "@/components/christmas-scene";
 export default function Page() {
   return (
     <div className="public-site">
@@ -80,6 +81,7 @@ export default function Page() {
             <div className="preview-note">
               <Sparkles size={17} /> Pequeños pasos. Más claridad.
             </div>
+            <ChristmasScene />
           </div>
         </section>
         <section id="como-funciona" className="public-features">

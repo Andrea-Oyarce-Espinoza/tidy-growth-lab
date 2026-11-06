@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { ChristmasTheme } from "@/components/christmas-theme";
 export const metadata: Metadata = {
   title: "Tidy Growth Lab · Tu espacio gratuito para crecer",
   description:
@@ -10,7 +11,10 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="es">
-      <body>{children}</body>
+      <body className="christmas-season">
+        <ChristmasTheme />
+        {children}
+      </body>
     </html>
   );
 }
